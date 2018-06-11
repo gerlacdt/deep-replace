@@ -1,0 +1,24 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "space-before-function-paren": [
+            true,
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "arrow-parens": [
+            true,
+            "ban-single-arg-parens"
+        ],
+        "variable-name": [
+            true,
+            "allow-leading-underscore"
+        ],
+      "object-literal-sort-keys": false,
+      "no-var-requires": false,
+      "quotemark": [true, "single"]
+    }
+}
