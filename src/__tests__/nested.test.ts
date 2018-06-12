@@ -1,4 +1,4 @@
-import { deleteNestedKey, replaceKey } from '../nested';
+import { replaceKey } from '../nested';
 
 describe('nested', () => {
   describe('replace', () => {
@@ -70,7 +70,7 @@ describe('nested', () => {
         expect(result).toEqual({ foo: 'bar', key1: null });
       });
 
-      it('simple object with function', () => {
+      test('simple object with function', () => {
         const fn = () => 42;
         const obj = {
           key: 'value',
@@ -79,6 +79,22 @@ describe('nested', () => {
         const result = replaceKey(obj, 'key', replacement);
 
         expect(result).toEqual({ foo: 'bar', fn });
+      });
+
+      test('simple object, delete nested keys', () => {
+        const obj = {
+          key: 'value',
+          o: {
+            foo: 'bar',
+            key: 'value2',
+          },
+        };
+        const replacementFn = (_key: string, _value: any): object => {
+          return {};
+        };
+        const result = replaceKey(obj, 'key', replacementFn);
+
+        expect(result).toEqual({ o: { foo: 'bar' } });
       });
     });
 
@@ -121,48 +137,6 @@ describe('nested', () => {
           list: [{ k: 44, newProp: 1 }],
         });
       });
-    });
-  });
-
-  describe('delete', () => {
-    test('simple object, delete nested keys', () => {
-      const obj = {
-        key: 'value',
-        o: {
-          foo: 'bar',
-          key: 'value2',
-        },
-      };
-      const replacementFn = (_key: string, _value: any): object => {
-        return {};
-      };
-      const result = replaceKey(obj, 'key', replacementFn);
-
-      expect(result).toEqual({ o: { foo: 'bar' } });
-    });
-
-    it('simple object', () => {
-      const obj = {
-        key: 'value',
-        foo: 'bar',
-      };
-      const result = deleteNestedKey(obj, 'key');
-
-      expect(result).toEqual({ foo: 'bar' });
-    });
-
-    it('nested object', () => {
-      const obj = {
-        key: 'value',
-        foo: 'bar',
-        o: {
-          key: 'value2',
-          foo2: 'bar2',
-        },
-      };
-      const result = deleteNestedKey(obj, 'key');
-
-      expect(result).toEqual({ foo: 'bar', o: { foo2: 'bar2' } });
     });
   });
 });

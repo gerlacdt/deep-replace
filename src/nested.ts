@@ -18,11 +18,7 @@ export function replaceKey(
     for (const prop in o) {
       if (prop === key) {
         const replacementObj = replacement(key, o[prop]);
-        // if (replacementObj.value) {
-        // support nested property delete (only replace if value is defined)
         result = { ...result, ...replacementObj };
-        // result[replacementObj.key] = replacementObj.value;
-        // }
       } else {
         result[prop] = replaceKey(o[prop], key, replacement);
       }
@@ -30,11 +26,4 @@ export function replaceKey(
     return result;
   }
   return o; // handle number, string, function
-}
-
-export function deleteNestedKey(o: any, key: string): any {
-  const fn = (_key: string, _value: any): object => {
-    return {};
-  };
-  return replaceKey(o, key, fn);
 }
