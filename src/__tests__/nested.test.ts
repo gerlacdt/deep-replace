@@ -1,4 +1,4 @@
-import { replaceKey } from '../nested';
+import { deepReplace } from '../nested';
 
 describe('nested', () => {
   describe('replace', () => {
@@ -13,7 +13,7 @@ describe('nested', () => {
         const obj = {
           key: 'value',
         };
-        const result = replaceKey(obj, 'key', replacement);
+        const result = deepReplace(obj, 'key', replacement);
 
         expect(result).toEqual({ foo: 'bar' });
       });
@@ -22,7 +22,7 @@ describe('nested', () => {
         const obj = {
           list: [{ key: 'http://www.example.com' }],
         };
-        const result = replaceKey(obj, 'key', replacement);
+        const result = deepReplace(obj, 'key', replacement);
 
         expect(result).toEqual({ list: [{ foo: 'bar' }] });
       });
@@ -41,7 +41,7 @@ describe('nested', () => {
             list: [{ key: 'value' }, { a: 'b' }],
           },
         };
-        const result = replaceKey(obj, 'key', replacement);
+        const result = deepReplace(obj, 'key', replacement);
         const expected = {
           list: [{ a: 'b', foo: 'bar', c: { foo: 'bar' } }],
           o: { foo: 'bar', list: [{ foo: 'bar' }, { a: 'b' }] },
@@ -55,7 +55,7 @@ describe('nested', () => {
           key: 'value',
           key1: undefined,
         };
-        const result = replaceKey(obj, 'key', replacement);
+        const result = deepReplace(obj, 'key', replacement);
 
         expect(result).toEqual({ foo: 'bar', key1: undefined });
       });
@@ -65,7 +65,7 @@ describe('nested', () => {
           key: 'value',
           key1: null,
         };
-        const result = replaceKey(obj, 'key', replacement);
+        const result = deepReplace(obj, 'key', replacement);
 
         expect(result).toEqual({ foo: 'bar', key1: null });
       });
@@ -76,7 +76,7 @@ describe('nested', () => {
           key: 'value',
           fn,
         };
-        const result = replaceKey(obj, 'key', replacement);
+        const result = deepReplace(obj, 'key', replacement);
 
         expect(result).toEqual({ foo: 'bar', fn });
       });
@@ -92,7 +92,7 @@ describe('nested', () => {
         const replacementFn = (_key: string, _value: any): object => {
           return {};
         };
-        const result = replaceKey(obj, 'key', replacementFn);
+        const result = deepReplace(obj, 'key', replacementFn);
 
         expect(result).toEqual({ o: { foo: 'bar' } });
       });
@@ -108,7 +108,7 @@ describe('nested', () => {
             [key]: key + JSON.stringify(value),
           };
         };
-        const result = replaceKey(obj, 'key', replacementFn);
+        const result = deepReplace(obj, 'key', replacementFn);
 
         expect(result).toEqual({ key: 'key42' });
       });
@@ -129,7 +129,7 @@ describe('nested', () => {
           };
         };
 
-        const result = replaceKey(obj, 'k', replFn);
+        const result = deepReplace(obj, 'k', replFn);
 
         expect(result).toEqual({
           k: 43,

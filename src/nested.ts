@@ -1,6 +1,6 @@
 type replacementFn = (key: string, value: any) => object;
 
-export function replaceKey(
+export function deepReplace(
   o: any,
   key: string,
   replacement: replacementFn,
@@ -9,7 +9,7 @@ export function replaceKey(
     // handle array first, because array is an object too
     const result = [];
     for (const item of o) {
-      result.push(replaceKey(item, key, replacement));
+      result.push(deepReplace(item, key, replacement));
     }
     return result;
   } else if (typeof o === 'object' && o !== null) {
@@ -20,7 +20,7 @@ export function replaceKey(
         const replacementObj = replacement(key, o[prop]);
         result = { ...result, ...replacementObj };
       } else {
-        result[prop] = replaceKey(o[prop], key, replacement);
+        result[prop] = deepReplace(o[prop], key, replacement);
       }
     }
     return result;
