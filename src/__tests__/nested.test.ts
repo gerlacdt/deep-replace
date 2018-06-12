@@ -32,19 +32,35 @@ describe('nested', () => {
           list: [
             {
               a: 'b',
-              key: 'value',
-              c: { key: 'value' },
+              foo: 'value',
+              c: { foo: 'value' },
             },
           ],
           o: {
-            key: 'value',
-            list: [{ key: 'value' }, { a: 'b' }],
+            foo: 'value',
+            list: [{ foo: 'value' }, { a: 'b' }],
           },
         };
-        const result = deepReplace(obj, 'key', replacement);
+
+        const replacement = (_key: string, value: any): object => {
+          return {
+            foo2: value + '2',
+          };
+        };
+
+        const result = deepReplace(obj, 'foo', replacement);
         const expected = {
-          list: [{ a: 'b', foo: 'bar', c: { foo: 'bar' } }],
-          o: { foo: 'bar', list: [{ foo: 'bar' }, { a: 'b' }] },
+          list: [
+            {
+              a: 'b',
+              foo2: 'value2',
+              c: { foo2: 'value2' },
+            },
+          ],
+          o: {
+            foo2: 'value2',
+            list: [{ foo2: 'value2' }, { a: 'b' }],
+          },
         };
 
         expect(result).toEqual(expected);
@@ -83,37 +99,44 @@ describe('nested', () => {
 
       test('simple object, delete nested keys', () => {
         const obj = {
-          key: 'value',
+          foo: 'value',
           o: {
-            foo: 'bar',
-            key: 'value2',
+            a: 'b',
+            foo: 'value2',
           },
         };
         const replacementFn = (_key: string, _value: any): object => {
-          return {};
+          return {}; // set empty object means delete given key
         };
-        const result = deepReplace(obj, 'key', replacementFn);
+        const result = deepReplace(obj, 'foo', replacementFn);
 
-        expect(result).toEqual({ o: { foo: 'bar' } });
+        expect(result).toEqual({ o: { a: 'b' } });
       });
     });
 
     describe('re-use existing key and value', () => {
-      test('simple object', () => {
+      test('simple replacement', () => {
         const obj = {
-          key: 42,
+          foo: 1,
+          list: [{ foo: 2 }],
+          nested: {
+            foo: 3,
+          },
         };
         const replacementFn = (key: string, value: any): object => {
           return {
-            [key]: key + JSON.stringify(value),
+            [key]: value + 1,
           };
         };
-        const result = deepReplace(obj, 'key', replacementFn);
-
-        expect(result).toEqual({ key: 'key42' });
+        const result = deepReplace(obj, 'foo', replacementFn);
+        expect(result).toEqual({
+          foo: 2,
+          list: [{ foo: 3 }],
+          nested: { foo: 4 },
+        });
       });
 
-      test('complex object, add new key-value pairs', () => {
+      test('add new key-value pairs', () => {
         const obj = {
           k: 42,
           list: [
