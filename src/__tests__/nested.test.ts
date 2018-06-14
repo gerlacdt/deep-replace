@@ -42,13 +42,13 @@ describe('nested', () => {
           },
         };
 
-        const replacement = (_key: string, value: any): object => {
+        const replaceFn = (_key: string, value: any): object => {
           return {
             foo2: value + '2',
           };
         };
 
-        const result = deepReplace(obj, 'foo', replacement);
+        const result = deepReplace(obj, 'foo', replaceFn);
         const expected = {
           list: [
             {

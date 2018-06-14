@@ -1,16 +1,21 @@
 {
-  "name": "nested-json",
+  "name": "deep-replace",
   "version": "0.1.0",
-  "description": "process nested json",
-  "main": "",
+  "description": "deep-replace a key within a object",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "compile": "npm run clean && npm run lint; rm -rf dist/; tsc -p .",
+    "build": "npm run clean; tsc -p .",
     "clean": "rm -rf dist/",
     "watch": "tsc -w -p .",
     "test": "jest",
     "lint": "tslint --project tsconfig.json",
     "lint-fix": "tslint --fix --project tsconfig.json",
-    "format": "prettier --write src/**/*.ts"
+    "format": "prettier --write src/**/*.ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src"
   },
   "keywords": [],
   "author": "gerlacdt",
@@ -23,5 +28,7 @@
     "tslint": "^5.9.1",
     "typescript": "^2.9.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "keywords": ["deep", "nested", "map", "replace", "object"],
+  "author": "gerlacdt"
 }
