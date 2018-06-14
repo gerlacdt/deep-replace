@@ -17,7 +17,7 @@ Simple use-cases are:
 ### Install
 
 ``` bash
-npm install --save deep-replace
+npm install --save gdeep-replace
 ```
 
 ### Usage
