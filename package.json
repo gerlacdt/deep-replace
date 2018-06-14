@@ -1,5 +1,5 @@
 {
-  "name": "deep-replace",
+  "name": "gdeep-replace",
   "version": "0.1.0",
   "description": "deep-replace a key within a object",
   "main": "dist/index.js",
