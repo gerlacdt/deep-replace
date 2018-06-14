@@ -17,7 +17,11 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gerlacdt/deep-replace.git"
+  },
+  "keywords": ["deep", "nested", "map", "replace", "object"],
   "author": "gerlacdt",
   "license": "MIT",
   "devDependencies": {
@@ -28,7 +32,5 @@
     "tslint": "^5.9.1",
     "typescript": "^2.9.1"
   },
-  "dependencies": {},
-  "keywords": ["deep", "nested", "map", "replace", "object"],
-  "author": "gerlacdt"
+  "dependencies": {}
 }

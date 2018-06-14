@@ -1,10 +1,6 @@
 type replacementFn = (key: string, value: any) => object;
 
-export function deepReplace(
-  o: any,
-  key: string,
-  replacement: replacementFn,
-): any {
+function deepReplace(o: any, key: string, replacement: replacementFn): any {
   if (Array.isArray(o)) {
     // handle array first, because array is an object too
     const result = [];
@@ -27,3 +23,5 @@ export function deepReplace(
   }
   return o; // handle number, string, function
 }
+
+export { deepReplace };

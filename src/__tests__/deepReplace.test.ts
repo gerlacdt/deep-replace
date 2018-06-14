@@ -1,4 +1,4 @@
-import { deepReplace } from '../nested';
+import { deepReplace } from '../';
 
 describe('nested', () => {
   describe('replace', () => {
